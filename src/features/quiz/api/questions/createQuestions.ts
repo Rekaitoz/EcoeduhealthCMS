@@ -4,27 +4,26 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Questions, QuestionsDTO } from '../types';
+import { Questions, QuestionsDTO } from '../../types';
 
-type QuestionsUpdateRequest = {
-  id: number;
+type QuestionsCreateRequest = {
   data: QuestionsDTO | { quiz: number };
 };
 
-export async function updateQuestions({ id, data }: QuestionsUpdateRequest) {
-  const res = await axios.put<GeneralResponse<Questions>>(`/question/${id}`, data);
+export async function createQuestions({ data }: QuestionsCreateRequest) {
+  const res = await axios.post<GeneralResponse<Questions>>(`/question`, data);
 
   return res.data;
 }
 
-type UseUpdateQuestionsOptions = {
-  config?: MutationConfig<typeof updateQuestions>;
+type UseCreateQuestionsOptions = {
+  config?: MutationConfig<typeof createQuestions>;
 };
 
-export function useUpdateQuestions({ config }: UseUpdateQuestionsOptions = {}) {
+export function useCreateQuestions({ config }: UseCreateQuestionsOptions = {}) {
   return useMutation({
     ...config,
-    mutationFn: updateQuestions,
+    mutationFn: createQuestions,
     onSuccess: (...args) => {
       queryClient.invalidateQueries({ queryKey: ['quizById'] });
 

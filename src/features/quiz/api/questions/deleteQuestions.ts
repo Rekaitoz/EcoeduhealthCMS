@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Questions } from '../types';
+import { Questions } from '../../types';
 
 type QuestionsDeleteRequest = {
   id: number;
