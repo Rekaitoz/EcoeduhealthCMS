@@ -82,7 +82,7 @@ export const UserTable: React.FC<Props> = ({ title = 'Users', role, company, onA
           <h2 className="text-gray-800 inline">{title} </h2>
         </div>
 
-        <Authorization role={['owner']}>
+        <Authorization role={['user']}>
           {onAdd && (
             <Button size="xs" onClick={onAdd}>
               Tambah
@@ -106,7 +106,7 @@ export const UserTable: React.FC<Props> = ({ title = 'Users', role, company, onA
               <td className="capitalize">{user.role}</td>
               <td>{dayjs(user.createdAt).format('D MMMM YYYY')}</td>
               <td>
-                <Authorization role={['owner']}>
+                <Authorization role={['user']}>
                   <div className="flex items-center space-x-2">
                     <ActionIcon
                       title="Remove user"

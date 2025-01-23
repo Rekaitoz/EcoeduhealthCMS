@@ -4,6 +4,7 @@ import {
   IconBuildingEstate,
   IconBuildingStore,
   IconBuildingWarehouse,
+  IconClipboard,
   IconLayout,
   IconUsers,
   IconUsersGroup,
@@ -21,6 +22,7 @@ const navigations: SidebarNavigation = [
   {
     routes: [
       { title: 'Dashboard', href: '/', icon: IconLayout },
+      { title: 'Quiz', href: '/quiz', icon: IconClipboard },
       { title: 'Perusahaan', href: '/company', icon: IconBuildingEstate },
       { title: 'Outlet', href: '/outlet', icon: IconBuildingStore },
       { title: 'Gudang', href: '/warehouse', icon: IconBuildingWarehouse },
@@ -55,7 +57,7 @@ export const DashboardLayout: React.FC = () => {
   useEffect(() => {
     if (!creds) return;
 
-    if (creds.role == 'employee') logout();
+    if (creds.role == 'user') logout();
   }, [creds, logout]);
 
   return (

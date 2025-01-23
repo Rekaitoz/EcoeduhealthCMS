@@ -18,15 +18,15 @@ export const UserCreateForm: React.FC<Props> = ({ role, onSuccess }) => {
       name: '',
       username: '',
       password: '',
-      role: role ? role : 'superadmin',
-      status: 'active',
+      role: role ? role : 'admin',
+      statusTemp: 'active',
     },
   });
-  const { mutateAsync, isLoading } = useCreateUser();
+  const { mutateAsync, isPending } = useCreateUser();
 
   const handleSubmit = form.onSubmit(async (values) => {
     await mutateAsync(
-      { data: values },
+      { data: { ...values, status: values.statusTemp === 'active' } },
       {
         onError({ response }) {
           form.setErrors((response?.data as any).errors);
@@ -57,8 +57,8 @@ export const UserCreateForm: React.FC<Props> = ({ role, onSuccess }) => {
             label="Role"
             required
             data={[
-              { label: 'Superadmin', value: 'superadmin' },
-              { label: 'Owner', value: 'owner' },
+              { label: 'Admin', value: 'admin' },
+              { label: 'User', value: 'user' },
             ]}
             {...form.getInputProps('role')}
           />
@@ -79,11 +79,11 @@ export const UserCreateForm: React.FC<Props> = ({ role, onSuccess }) => {
           type="button"
           variant="default"
           onClick={() => modals.closeAll()}
-          loading={isLoading}
+          loading={isPending}
         >
           Batal
         </Button>
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={isPending}>
           Tambah
         </Button>
       </div>

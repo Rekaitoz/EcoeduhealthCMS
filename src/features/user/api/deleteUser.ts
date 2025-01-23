@@ -21,10 +21,11 @@ type UseDeleteUserOptions = {
 };
 
 export function useDeleteUser({ config }: UseDeleteUserOptions = {}) {
-  return useMutation(deleteUser, {
+  return useMutation({
     ...config,
+    mutationFn: deleteUser,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['users']);
+      queryClient.invalidateQueries({ queryKey: ['users'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

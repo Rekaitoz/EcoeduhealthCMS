@@ -20,10 +20,13 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
       username: user.username,
       password: '',
       role: user.role,
-      status: user.status,
+      statusTemp: user.status ? 'active' : 'inactive',
     },
   });
-  const { mutateAsync, isLoading } = useUpdateUser({
+
+  console.log(user);
+
+  const { mutateAsync, isPending } = useUpdateUser({
     config: {
       onError({ response }) {
         form.setErrors((response?.data as any).errors);
@@ -43,7 +46,7 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
-    await mutateAsync({ id: user.id, data: values });
+    await mutateAsync({ id: user.id, data: { ...values, status: values.statusTemp === 'active' } });
   });
 
   return (
@@ -61,8 +64,8 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
             label="Role"
             required
             data={[
-              { label: 'Owner', value: 'owner' },
-              { label: 'Superadmin', value: 'superadmin' },
+              { label: 'Admin', value: 'admin' },
+              { label: 'User', value: 'user' },
             ]}
             {...form.getInputProps('role')}
           />
@@ -74,7 +77,7 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
             { label: 'Active', value: 'active' },
             { label: 'Inactive', value: 'inactive' },
           ]}
-          {...form.getInputProps('status')}
+          {...form.getInputProps('statusTemp')}
         />
       </div>
 
@@ -83,11 +86,11 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
           type="button"
           variant="default"
           onClick={() => modals.closeAll()}
-          loading={isLoading}
+          loading={isPending}
         >
           Batal
         </Button>
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={isPending}>
           Simpan
         </Button>
       </div>

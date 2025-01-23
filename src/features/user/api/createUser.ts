@@ -21,10 +21,11 @@ type UseCreateUserOptions = {
 };
 
 export function useCreateUser({ config }: UseCreateUserOptions = {}) {
-  return useMutation(createUser, {
+  return useMutation({
     ...config,
+    mutationFn: createUser,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['users']);
+      queryClient.invalidateQueries({ queryKey: ['users'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

@@ -10,7 +10,7 @@ type Props = {
 export const Authorization: React.FC<Props> = ({ role, children }) => {
   const { creds } = useAuth();
 
-  if (role.includes(creds?.role ?? 'owner')) return null;
+  if (role.includes(creds?.role ?? 'user')) return null;
 
   return <>{children}</>;
 };

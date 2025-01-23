@@ -17,14 +17,14 @@ export const Users: React.FC = () => {
     <main>
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-800">User</h1>
-        <Authorization role={['owner']}>
+        <Authorization role={['user']}>
           <Button onClick={handleAdd}>Tambah</Button>
         </Authorization>
       </div>
 
-      {/* <section className="mb-8">
-        <UserTable role="-employee" />
-      </section> */}
+      <section className="mb-8">
+        <UserTable role="-user" />
+      </section>
     </main>
   );
 };

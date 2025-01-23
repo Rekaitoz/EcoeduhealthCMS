@@ -22,10 +22,11 @@ type UseUpdateUserOptions = {
 };
 
 export function useUpdateUser({ config }: UseUpdateUserOptions = {}) {
-  return useMutation(updateUser, {
+  return useMutation({
     ...config,
+    mutationFn: updateUser,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['users']);
+      queryClient.invalidateQueries({ queryKey: ['users'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

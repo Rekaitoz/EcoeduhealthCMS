@@ -10,6 +10,9 @@ import { lazyImport } from '@/utils/lazyImport';
 const { Login } = lazyImport(() => import('@/features/auth'), 'Login');
 const { Dashboard } = lazyImport(() => import('@/features/misc'), 'Dashboard');
 const { Users } = lazyImport(() => import('@/features/user'), 'Users');
+const { Quiz } = lazyImport(() => import('@/features/quiz'), 'Quiz');
+const { QuizDetail } = lazyImport(() => import('@/features/quiz'), 'QuizDetail');
+
 const { Employees } = lazyImport(() => import('@/features/employee'), 'Employees');
 
 const { Categories } = lazyImport(() => import('@/features/product'), 'Categories');
@@ -42,6 +45,8 @@ export const AppRoutes: React.FC = () => {
           <Route index element={<Dashboard />} />
           <Route path="/user" element={<Users />} />
           <Route path="/employee" element={<Employees />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/quiz/detail/:id" element={<QuizDetail />} />
 
           <Route path="/category" element={<Categories />} />
           <Route path="/product" element={<Products />} />

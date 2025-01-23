@@ -1,4 +1,4 @@
-export type Role = 'superadmin' | 'owner' | 'employee';
+export type Role = 'admin' | 'user';
 
 export type User = {
   id: number;
@@ -15,7 +15,8 @@ export type UserRequest = {
   username: string;
   password?: string;
   role: Role;
-  status: 'active' | 'inactive';
+  status?: true | false;
+  statusTemp: 'active' | 'inactive';
 };
 
 export type UserQuery = {
