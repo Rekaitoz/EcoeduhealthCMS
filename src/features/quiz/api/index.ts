@@ -7,3 +7,5 @@ export * from './getQuizs';
 export * from './getQuizById';
 export * from './updateQuiz';
 export * from './questions/updateQuestions';
+export * from './submission/getSubmission';
+export * from './submission/getSubmissionById';

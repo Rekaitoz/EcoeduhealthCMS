@@ -130,7 +130,7 @@ export const QuestionForm: React.FC<Props> = ({ quiz, questions, onSuccess }) =>
             onClick={() =>
               form.insertListItem(`answers`, {
                 text: '',
-                answers: [{ text: '', value: 0 }],
+                value: 0,
               })
             }
           >

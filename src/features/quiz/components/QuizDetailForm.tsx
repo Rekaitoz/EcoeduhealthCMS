@@ -1,7 +1,7 @@
 import { ActionIcon, Button, Card, Divider, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
+import { IconCheck, IconEdit, IconNotes, IconPlus, IconTrash } from '@tabler/icons-react';
 
 import { Product } from '@/features/product';
 
@@ -9,6 +9,7 @@ import { useDeleteQuestions } from '../api';
 import { Questions, Quiz } from '../types';
 
 import { QuestionForm } from './QuestionForm';
+import { SubmissionDetail } from './SubmissionDetail';
 
 type Props = {
   quiz?: Quiz;
@@ -32,6 +33,14 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
       title: 'Update Pertanyaan',
       children: <QuestionForm quiz={quiz} questions={questions} />,
       size: 'xl',
+    });
+  }
+
+  function handleDetail() {
+    modals.open({
+      title: 'Detail Submission',
+      children: <SubmissionDetail quiz={quiz} />,
+      size: '100%',
     });
   }
 
@@ -85,14 +94,25 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
             <h1 className="text-2xl font-semibold text-gray-900">{quiz?.name}</h1>
             <h1 className="text-sm">{quiz?.description}</h1>
           </div>
-          <Button
-            size="xs"
-            variant="gradient"
-            leftSection={<IconPlus size={14} />}
-            onClick={handleAdd}
-          >
-            Tambah Pertanyaan
-          </Button>
+          <div className="flex flex-col items-start gap-2">
+            <Button
+              size="xs"
+              variant="gradient"
+              leftSection={<IconPlus size={14} />}
+              onClick={handleAdd}
+            >
+              Tambah Pertanyaan
+            </Button>
+            <Button
+              size="xs"
+              variant="light"
+              leftSection={<IconNotes size={14} />}
+              onClick={handleDetail}
+            >
+              Hasil Submission
+            </Button>
+          </div>
+
           <Divider />
           <div>
             {quiz?.questions && quiz?.questions.length > 0 ? (

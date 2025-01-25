@@ -1,4 +1,5 @@
-import { Pagination } from '@/types/api';
+import { User } from '@/features/user';
+import { Metadata, Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
 export type Quiz = {
@@ -36,3 +37,34 @@ export type AnswersDTO = {
 export type QuizQuery = {
   keyword?: string;
 } & Pagination;
+
+export type Submission = {
+  answer: Answers;
+  question: Questions;
+  quiz: Quiz;
+  user: User;
+} & BaseEntity;
+
+export type SubmissionGetAll = {
+  metadata: Metadata;
+  result: Submission[];
+} & BaseEntity;
+
+export type SubmissionFilter = {
+  id: number;
+  name: string;
+  submission: {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    question: {
+      id: number;
+      text: string;
+    };
+    answer: {
+      id: number;
+      text: string;
+      value: number;
+    };
+  }[];
+};
