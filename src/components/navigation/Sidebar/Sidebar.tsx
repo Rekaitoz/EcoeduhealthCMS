@@ -78,7 +78,11 @@ export const Sidebar: React.FC<Props> = ({ navigations }) => {
           </UnstyledButton>
 
           <Link to="/" className="block">
-            <img src="/images/abude-logo.png" className="w-12 h-auto" alt="" />
+            <img
+              src="/images/ecoeduhealth.png"
+              className="w-12 h-auto bg-green-500 rounded-full"
+              alt=""
+            />
           </Link>
         </div>
 

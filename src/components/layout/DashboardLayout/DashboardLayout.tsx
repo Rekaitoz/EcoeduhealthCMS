@@ -23,24 +23,7 @@ const navigations: SidebarNavigation = [
     routes: [
       { title: 'Dashboard', href: '/', icon: IconLayout },
       { title: 'Quiz', href: '/quiz', icon: IconClipboard },
-      { title: 'Perusahaan', href: '/company', icon: IconBuildingEstate },
-      { title: 'Outlet', href: '/outlet', icon: IconBuildingStore },
-      { title: 'Gudang', href: '/warehouse', icon: IconBuildingWarehouse },
-      { title: 'Pegawai', href: '/employee', icon: IconUsersGroup },
       { title: 'User', href: '/user', icon: IconUsers },
-    ],
-  },
-  {
-    title: 'Data Master',
-    routes: [
-      {
-        title: 'Produk',
-        icon: IconBoxSeam,
-        routes: [
-          { title: 'Data Produk', href: '/product' },
-          { title: 'Data Kategori', href: '/category' },
-        ],
-      },
     ],
   },
 ];
