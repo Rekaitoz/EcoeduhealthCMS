@@ -34,7 +34,7 @@ export const QuizUpdateForm: React.FC<Props> = ({ quiz, onSuccess }) => {
             onSuccess();
           }
           notifications.show({
-            message: 'Pegawai berhasil diubah',
+            message: 'Kuesioner berhasil diubah',
             color: 'green',
             icon: <IconCheck />,
           });

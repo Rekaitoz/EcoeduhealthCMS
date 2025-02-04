@@ -29,8 +29,8 @@ export const QuizTable: React.FC = () => {
   function handleRemove(id: number) {
     return () => {
       modals.openConfirmModal({
-        title: 'Hapus Pegawai',
-        children: <Text size="sm">Apakah anda yakin untuk menghapus pegawai ini?</Text>,
+        title: 'Hapus Kuesioner',
+        children: <Text size="sm">Apakah anda yakin untuk menghapus Kuesioner ini?</Text>,
         centered: true,
         closeOnConfirm: false,
         onConfirm: async () => {
@@ -39,7 +39,7 @@ export const QuizTable: React.FC = () => {
             {
               onSuccess: () => {
                 notifications.show({
-                  message: 'Pegawai berhasil dihapus',
+                  message: 'Kuesioner berhasil dihapus',
                   color: 'green',
                   icon: <IconCheck />,
                 });
@@ -47,7 +47,7 @@ export const QuizTable: React.FC = () => {
               },
               onError: () => {
                 notifications.show({
-                  message: 'Pegawai tidak bisa dihapus',
+                  message: 'Kuesioner tidak bisa dihapus',
                   color: 'red',
                 });
               },
@@ -71,7 +71,7 @@ export const QuizTable: React.FC = () => {
     <Card p="lg" shadow="sm">
       <div className="flex items-center justify-between mb-4">
         <div className="font-bold text-lg">
-          <h2 className="text-gray-800 inline">Data Pegawai</h2>
+          <h2 className="text-gray-800 inline">Data Kuesioner</h2>
         </div>
       </div>
 
@@ -91,7 +91,7 @@ export const QuizTable: React.FC = () => {
               <td>
                 <div className="flex items-center space-x-2">
                   <ActionIcon
-                    title="Update quiz"
+                    title="Update Kuesioner"
                     onClick={handleUpdate(quiz)}
                     color="yellow"
                     variant="subtle"
@@ -100,7 +100,7 @@ export const QuizTable: React.FC = () => {
                     <IconEdit size={18} />
                   </ActionIcon>
                   <ActionIcon
-                    title="Detail quiz"
+                    title="Detail Kuesioner"
                     component={Link}
                     to={`/quiz/detail/${quiz.id}`}
                     color="blue"
@@ -110,7 +110,7 @@ export const QuizTable: React.FC = () => {
                     <IconNotes size={19} />
                   </ActionIcon>
                   <ActionIcon
-                    title="Hapus quiz"
+                    title="Hapus Kuesioner"
                     onClick={handleRemove(quiz.id)}
                     color="red"
                     variant="subtle"

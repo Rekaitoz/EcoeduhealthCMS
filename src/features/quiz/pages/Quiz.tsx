@@ -6,7 +6,7 @@ import { QuizCreateForm, QuizTable } from '../components';
 export const Quiz: React.FC = () => {
   function handleAdd() {
     modals.open({
-      title: 'Tambah Quiz',
+      title: 'Tambah Kuesioner',
       children: <QuizCreateForm />,
     });
   }
@@ -14,7 +14,7 @@ export const Quiz: React.FC = () => {
   return (
     <main>
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-800">Quiz</h1>
+        <h1 className="text-3xl font-bold text-gray-800">Kuesioner</h1>
         <Button onClick={handleAdd}>Tambah</Button>
       </div>
 

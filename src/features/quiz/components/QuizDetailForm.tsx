@@ -3,8 +3,6 @@ import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconEdit, IconNotes, IconPlus, IconTrash } from '@tabler/icons-react';
 
-import { Product } from '@/features/product';
-
 import { useDeleteQuestions } from '../api';
 import { Questions, Quiz } from '../types';
 
@@ -13,7 +11,7 @@ import { SubmissionDetail } from './SubmissionDetail';
 
 type Props = {
   quiz?: Quiz;
-  onSuccess?: (result: Product) => void;
+  onSuccess?: (result: Questions) => void;
   onCancel?: () => void;
 };
 
@@ -47,9 +45,9 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
   function handleRemove(id: number) {
     return () => {
       modals.openConfirmModal({
-        modalId: 'product-delete',
+        modalId: 'questions-delete',
         title: 'Hapus Produk',
-        children: <Text size="sm">Apakah anda yakin untuk menghapus produk ini?</Text>,
+        children: <Text size="sm">Apakah anda yakin untuk menghapus Pertanyaan ini?</Text>,
         centered: true,
         closeOnConfirm: false,
         onConfirm: async () => {
@@ -83,7 +81,7 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
       <Card.Section withBorder>
         <div className="flex items-center justify-between py-3 px-5 ">
           <div className="text-base w-full">
-            <h2 className="text-gray-800 pt-2 font-semibold">Detail Pertanyaan Quiz</h2>
+            <h2 className="text-gray-800 pt-2 font-semibold">Detail Pertanyaan Kuesioner</h2>
           </div>
         </div>
       </Card.Section>
