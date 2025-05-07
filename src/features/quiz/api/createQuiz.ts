@@ -11,7 +11,7 @@ type QuizCreateRequest = {
 };
 
 export async function createQuiz({ data }: QuizCreateRequest) {
-  const res = await axios.post<GeneralResponse<Quiz>>(`/quiz`, data);
+  const res = await axios.post<GeneralResponse<Quiz>>(`/quizzes`, data);
 
   return res.data;
 }

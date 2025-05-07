@@ -14,14 +14,16 @@ type LoginDTO = {
 };
 
 type LoginResponse = {
-  token: string;
-  creds: Creds;
+  data: {
+    token: string;
+    creds: Creds;
+  };
 };
 
 export async function login({ data }: LoginDTO) {
   const res = await axios.post<LoginResponse>('/auth/login', data);
 
-  return res.data;
+  return res.data.data;
 }
 
 type UseLoginOption = {
@@ -31,8 +33,9 @@ type UseLoginOption = {
 export function useLogin({ config }: UseLoginOption = {}) {
   return useMutation({
     mutationFn: login,
-    onSuccess: ({ creds, token }) => {
-      queryClient.setQueryData(['creds'], creds);
+    // onSuccess: ({ creds, token }) => {
+    onSuccess: ({ token }) => {
+      queryClient.setQueryData(['creds'], token);
       storage.setToken(token);
     },
     ...config,

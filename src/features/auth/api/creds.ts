@@ -6,8 +6,7 @@ import storage from '@/utils/storage';
 import { Creds } from '../types';
 
 export async function getCreds() {
-  const res = await axios.get<Creds>('/auth/verify');
-
+  const res = await axios.get<Creds>('/auth/profile');
   return res.data;
 }
 

@@ -10,10 +10,14 @@ type QuizsRequest = {
   params?: QuizQuery;
 };
 
-export async function getQuizs({ params }: QuizsRequest) {
-  const res = await axios.get<PaginatedResult<Quiz>>(`/quiz`, { params });
+type QuizsResponse = {
+  data: PaginatedResult<Quiz>;
+};
 
-  return res.data;
+export async function getQuizs({ params }: QuizsRequest) {
+  const res = await axios.get<QuizsResponse>(`/quizzes`, { params });
+
+  return res.data.data;
 }
 
 type QueryFnType = typeof getQuizs;

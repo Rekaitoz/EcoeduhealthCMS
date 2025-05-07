@@ -24,8 +24,6 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
     },
   });
 
-  console.log(user);
-
   const { mutateAsync, isPending } = useUpdateUser({
     config: {
       onError({ response }) {
