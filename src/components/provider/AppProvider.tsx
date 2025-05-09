@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from '@/features/auth';
 import { queryClient } from '@/lib/react-query';
 
+import '@mantine/tiptap/styles.css';
 import { ErrorProvider } from './ErrorProvider';
 import { StyleProvider } from './StyleProvider';
 

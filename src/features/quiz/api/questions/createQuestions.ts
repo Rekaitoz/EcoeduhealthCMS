@@ -11,6 +11,7 @@ type QuestionsCreateRequest = {
 };
 
 export async function createQuestions({ data }: QuestionsCreateRequest) {
+  console.log(data);
   const res = await axios.post<GeneralResponse<Questions>>(`/questions`, data);
 
   return res.data;

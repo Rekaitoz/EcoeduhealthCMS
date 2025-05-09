@@ -16,6 +16,7 @@ axios.interceptors.request.use((config) => {
       config.headers.authorization = `Bearer ${token}`;
     }
     config.headers.Accept = 'application/json';
+    config.headers['X-API-Key'] = 'dev-api-key';
   }
 
   return config;

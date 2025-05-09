@@ -8,6 +8,11 @@ const { Dashboard } = lazyImport(() => import('@/features/misc'), 'Dashboard');
 const { Users } = lazyImport(() => import('@/features/user'), 'Users');
 const { Quiz } = lazyImport(() => import('@/features/quiz'), 'Quiz');
 const { QuizDetail } = lazyImport(() => import('@/features/quiz'), 'QuizDetail');
+const { Category } = lazyImport(() => import('@/features/category'), 'Category');
+const { Tag } = lazyImport(() => import('@/features/tag'), 'Tag');
+const { Article } = lazyImport(() => import('@/features/article'), 'Article');
+const { ArticleCreate } = lazyImport(() => import('@/features/article'), 'ArticleCreate');
+const { ArticleUpdate } = lazyImport(() => import('@/features/article'), 'ArticleUpdate');
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -19,6 +24,14 @@ export const AppRoutes: React.FC = () => {
 
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/quiz/detail/:id" element={<QuizDetail />} />
+
+          <Route path="/article" element={<Article />} />
+          <Route path="/article/create" element={<ArticleCreate />} />
+          <Route path="/article/update/:id" element={<ArticleUpdate />} />
+
+          <Route path="/category" element={<Category />} />
+
+          <Route path="/tag" element={<Tag />} />
         </Route>
       </Route>
 

@@ -1,13 +1,11 @@
 import { Center, Loader } from '@mantine/core';
 import {
-  IconBoxSeam,
-  IconBuildingEstate,
-  IconBuildingStore,
-  IconBuildingWarehouse,
+  IconArticle,
   IconClipboard,
   IconLayout,
+  IconQuote,
+  IconTag,
   IconUsers,
-  IconUsersGroup,
 } from '@tabler/icons-react';
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
@@ -23,6 +21,9 @@ const navigations: SidebarNavigation = [
     routes: [
       { title: 'Dashboard', href: '/', icon: IconLayout },
       { title: 'Quiz', href: '/quiz', icon: IconClipboard },
+      { title: 'Article', href: '/article', icon: IconArticle },
+      { title: 'Kategori', href: '/category', icon: IconQuote },
+      { title: 'Tag', href: '/tag', icon: IconTag },
       { title: 'User', href: '/user', icon: IconUsers },
     ],
   },
