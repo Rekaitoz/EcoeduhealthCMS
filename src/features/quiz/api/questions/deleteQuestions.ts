@@ -11,7 +11,7 @@ type QuestionsDeleteRequest = {
 };
 
 export async function deleteQuestions({ id }: QuestionsDeleteRequest) {
-  const res = await axios.delete<GeneralResponse<Questions>>(`/question/${id}`);
+  const res = await axios.delete<GeneralResponse<Questions>>(`/questions/${id}`);
 
   return res.data;
 }

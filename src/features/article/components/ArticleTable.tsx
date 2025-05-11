@@ -75,17 +75,34 @@ export const ArticleTable: React.FC<Props> = ({ category, tag }) => {
       });
     };
   }
+  console.log(data);
 
   return (
     <Table
       title="Tabel Data Article"
       loading={isLoading}
-      header={['Article Name', 'Tags', 'Categories', 'Date', '']}
+      header={['Thumbnail', 'Article Name', 'Tags', 'Categories', 'Date', '']}
       items={data?.result}
       metadata={data?.metadata}
       onPageChange={handlePage}
       renderItem={(article) => (
         <tr key={article.id}>
+          <td className="capitalize min-w-max">
+            <div className="flex items-center mr-6">
+              <a
+                href={article.thumbnail?.path}
+                target="_blank"
+                className="block flex-shrink-0 aspect-video w-24 bg-slate-200 rounded-md relative overflow-hidden"
+                rel="noreferrer"
+              >
+                <img
+                  src={article.thumbnail?.path}
+                  alt={article.title}
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
+              </a>
+            </div>
+          </td>
           <td>
             <div>{article.title}</div>
           </td>

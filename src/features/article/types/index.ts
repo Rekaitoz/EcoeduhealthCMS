@@ -10,6 +10,15 @@ export type Article = {
   publishedAt?: Date;
   categories: CategoryType[];
   tags: TagType[];
+  thumbnail?: {
+    contentType: string;
+    createdAt: Date;
+    id: number;
+    name: string;
+    path: string;
+    size: number;
+    updatedAt: Date;
+  };
 } & BaseEntity;
 
 export type ArticleDTO = {
@@ -19,6 +28,7 @@ export type ArticleDTO = {
   publishedAt?: Date;
   categories: string[];
   tags: string[];
+  thumbnail?: File;
 };
 
 export type ArticleQuery = {

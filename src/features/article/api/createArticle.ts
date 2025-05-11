@@ -9,13 +9,15 @@ import { Article, ArticleDTO } from '../types';
 // import { Article, ArticleDTO } from '../../types';
 
 type ArticleCreateRearticle = {
-  data: ArticleDTO;
+  data: FormData;
 };
 
 export async function createArticle({ data }: ArticleCreateRearticle) {
-  console.log(data);
-
-  const res = await axios.post<GeneralResponse<Article>>(`/articles`, data, {});
+  const res = await axios.post<GeneralResponse<Article>>(`/articles`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   return res.data;
 }

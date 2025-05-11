@@ -8,11 +8,11 @@ import { Questions, QuestionsDTO } from '../../types';
 
 type QuestionsUpdateRequest = {
   id: number;
-  data: QuestionsDTO | { quiz: number };
+  data: QuestionsDTO | { quizId: number };
 };
 
 export async function updateQuestions({ id, data }: QuestionsUpdateRequest) {
-  const res = await axios.put<GeneralResponse<Questions>>(`/question/${id}`, data);
+  const res = await axios.put<GeneralResponse<Questions>>(`/questions/${id}`, data);
 
   return res.data;
 }

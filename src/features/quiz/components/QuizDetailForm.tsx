@@ -116,8 +116,8 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
             {quiz?.questions && quiz?.questions.length > 0 ? (
               quiz?.questions?.map((item, index) => (
                 <div key={`questions_${index}`} className="py-2">
-                  <div className="flex flex-col items-start gap-y-2 mb-2 pb-4">
-                    <div className="w-full pb-2">
+                  <div className="flex flex-col  items-start gap-y-2 mb-2 pb-4">
+                    <div className="w-full pb-2 ">
                       <h4 className="text-base font-bold pb-1 gap-x-1 flex items-center">
                         <span>Pertanyaan {index + 1} </span>
                         <div>
@@ -150,7 +150,7 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
                           key={`answer_${index2}`}
                           className="flex w-full items-center space-x-4 mb-1 last:mb-0"
                         >
-                          <div className="grid grid-cols-1 md:grid-cols-12  gap-3 flex-grow w-full">
+                          <div className="grid grid-cols-1 md:grid-cols-1  gap-3 flex-grow w-full ">
                             &#8226; {item2.text}
                             <div className="flex items-center space-x-2 col-span-6">
                               <span className="font-medium text-sm text-gray-800 ">

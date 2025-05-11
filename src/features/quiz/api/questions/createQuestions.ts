@@ -7,7 +7,7 @@ import { GeneralResponse } from '@/types/api';
 import { Questions, QuestionsDTO } from '../../types';
 
 type QuestionsCreateRequest = {
-  data: QuestionsDTO | { quiz: number };
+  data: QuestionsDTO | { quizId: number };
 };
 
 export async function createQuestions({ data }: QuestionsCreateRequest) {

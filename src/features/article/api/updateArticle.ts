@@ -4,15 +4,21 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
+import { Article } from '../types';
+
 // import { Article, ArticleDTO } from '../../types';
 
 export type ArticleUpdateRearticle = {
   id: number;
-  data: any;
+  data: FormData;
 };
 
 export async function updateArticle({ id, data }: ArticleUpdateRearticle) {
-  const res = await axios.post<GeneralResponse<any>>(`/articles/${id}`, data, {});
+  const res = await axios.post<GeneralResponse<Article>>(`/articles/${id}`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   return res.data;
 }

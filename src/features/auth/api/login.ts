@@ -33,9 +33,9 @@ type UseLoginOption = {
 export function useLogin({ config }: UseLoginOption = {}) {
   return useMutation({
     mutationFn: login,
-    // onSuccess: ({ creds, token }) => {
-    onSuccess: ({ token }) => {
-      queryClient.setQueryData(['creds'], token);
+    onSuccess: ({ creds, token }) => {
+      // onSuccess: ({ token }) => {
+      queryClient.setQueryData(['creds'], creds);
       storage.setToken(token);
     },
     ...config,

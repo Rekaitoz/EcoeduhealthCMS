@@ -12,7 +12,7 @@ type QuizUpdateRequest = {
 };
 
 export async function updateQuiz({ id, data }: QuizUpdateRequest) {
-  const res = await axios.put<GeneralResponse<Quiz>>(`/quiz/${id}`, data);
+  const res = await axios.put<GeneralResponse<Quiz>>(`/quizzes/${id}`, data);
 
   return res.data;
 }

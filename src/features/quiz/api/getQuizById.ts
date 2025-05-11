@@ -10,9 +10,9 @@ type QuizRequest = {
 };
 
 export async function getQuizById({ id }: QuizRequest) {
-  const res = await axios.get<Quiz>(`/quizzes/${id}`);
+  const res = await axios.get<{ data: Quiz }>(`/quizzes/${id}`);
 
-  return res.data;
+  return res.data.data;
 }
 
 type QueryFnType = typeof getQuizById;

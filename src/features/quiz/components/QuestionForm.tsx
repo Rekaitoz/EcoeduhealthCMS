@@ -31,7 +31,7 @@ export const QuestionForm: React.FC<Props> = ({ quiz, questions, onSuccess }) =>
   const handleSubmit = form.onSubmit(async (values) => {
     if (!questions) {
       await createMutation.mutateAsync(
-        { data: { ...values, quiz: quiz?.id } },
+        { data: { ...values, quizId: quiz?.id } },
         {
           onError({ response }) {
             form.setErrors((response?.data as any).errors);
@@ -50,7 +50,7 @@ export const QuestionForm: React.FC<Props> = ({ quiz, questions, onSuccess }) =>
       );
     } else {
       await updateMutation.mutateAsync(
-        { id: questions.id, data: { ...values, quiz: quiz?.id } },
+        { id: questions.id, data: { ...values, quizId: quiz?.id } },
         {
           onError({ response }) {
             form.setErrors((response?.data as any).errors);

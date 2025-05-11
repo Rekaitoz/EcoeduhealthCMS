@@ -1,12 +1,13 @@
-import { Button, Card, MultiSelect, TextInput } from '@mantine/core';
+import { Button, Card, MultiSelect, TextInput, Image } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
+import { Dropzone, FileWithPath } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { RichTextEditor, Link } from '@mantine/tiptap';
-import { IconCheck } from '@tabler/icons-react';
+import { IconCheck, IconUpload } from '@tabler/icons-react';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useCategorys } from '@/features/category';
 import { useTags } from '@/features/tag';
@@ -24,8 +25,6 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
   const { data: categories } = useCategorys();
   const { data: tags } = useTags();
 
-  console.log(article);
-
   const categoryOptions = useMemo(() => {
     return categories?.result.map((category) => ({
       label: category.name,
@@ -42,17 +41,17 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
 
   const createMutation = useCreateArticle();
   const updateMutation = useUpdateArticle();
+  const [preview, setPreview] = useState<string | null>(article?.thumbnail?.path || null);
+
   const form = useForm<ArticleDTO>({
     initialValues: {
       title: article?.title || '',
       content: article?.content ?? '',
-      publishedAt: article?.publishedAt ? new Date(article.publishedAt) : undefined,
+      publishedAt: article?.publishedAt ? new Date(article.publishedAt) : new Date(),
       categories: article?.categories.map((category) => String(category.id)) ?? [],
       tags: article?.tags.map((tag) => String(tag.id)) ?? [],
     },
   });
-
-  console.log(form.values);
 
   const editor = useEditor({
     extensions: [StarterKit, Link],
@@ -63,9 +62,27 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
+    const formData = new FormData();
+    formData.append('title', values.title);
+    formData.append('content', values.content);
+    if (values.publishedAt) {
+      formData.append('publishedAt', values.publishedAt.toISOString());
+    }
+    values.categories.forEach((category) => {
+      formData.append('categories', category);
+    });
+    values.tags.forEach((tag) => {
+      formData.append('tags', tag);
+    });
+    if (values.thumbnail) {
+      console.log(values);
+
+      formData.append('thumbnail', values.thumbnail);
+    }
+
     if (!article) {
       await createMutation.mutateAsync(
-        { data: values },
+        { data: formData },
         {
           onError({ response }) {
             form.setErrors((response?.data as any).errors);
@@ -84,7 +101,7 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
       );
     } else {
       await updateMutation.mutateAsync(
-        { id: article.id, data: values },
+        { id: article.id, data: formData },
         {
           onError({ response }) {
             form.setErrors((response?.data as any).errors);
@@ -124,6 +141,7 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
             className="col-span-12 lg:col-span-6"
             required
           />
+
           <div className="col-span-12 ">
             <span className="text-sm font-medium">Content</span>
             <RichTextEditor editor={editor}>
@@ -159,14 +177,6 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
               <RichTextEditor.Content />
             </RichTextEditor>
           </div>
-          <DatePickerInput
-            {...form.getInputProps('publishedAt')}
-            label="Published At"
-            description="Published At Of the Article"
-            placeholder="Insert Article Published At"
-            className="col-span-12 lg:col-span-6"
-            required
-          />
           <MultiSelect
             {...form.getInputProps('categories')}
             label="Categories"
@@ -185,6 +195,55 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
             data={tagOptions}
             required
           />
+          <div className="col-span-12 lg:col-span-12">
+            <div className="mb-2">
+              <span className="text-sm font-medium">Thumbnail</span>
+            </div>
+            <Dropzone
+              onDrop={(files: FileWithPath[]) => {
+                const file = files[0];
+                form.setFieldValue('thumbnail', file);
+                setPreview(URL.createObjectURL(file));
+              }}
+              maxFiles={1}
+              accept={['image/png', 'image/jpeg', 'image/jpg']}
+              className="mb-2 border py-8 rounded-md border-dashed border-gray-200 transition-colors duration-200 hover:bg-gray-50"
+              styles={{
+                root: {
+                  '&[data-accept]': {
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderColor: 'rgb(59, 130, 246)',
+                  },
+                },
+              }}
+            >
+              <div className="flex flex-col items-center justify-center gap-2 pointer-events-none">
+                <Dropzone.Accept>
+                  <IconUpload size={32} className="text-blue-500" />
+                </Dropzone.Accept>
+                <Dropzone.Reject>
+                  <IconUpload size={32} className="text-red-500" />
+                </Dropzone.Reject>
+                <Dropzone.Idle>
+                  <IconUpload size={32} className="text-gray-400 group-hover:text-blue-500" />
+                </Dropzone.Idle>
+                <div className="text-sm text-center">
+                  <p>Drag image here or click to select</p>
+                  <p className="text-xs text-gray-500">Only PNG, JPG files are accepted</p>
+                </div>
+              </div>
+            </Dropzone>
+            {preview && (
+              <div className="relative  w-56  rounded-md overflow-hidden">
+                <Image
+                  src={preview}
+                  alt="Thumbnail preview"
+                  className="object-contain"
+                  // height={192}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </Card.Section>
 
