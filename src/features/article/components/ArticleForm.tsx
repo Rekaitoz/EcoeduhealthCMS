@@ -1,10 +1,10 @@
 import { Button, Card, MultiSelect, TextInput, Image } from '@mantine/core';
-import { DatePickerInput } from '@mantine/dates';
 import { Dropzone, FileWithPath } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
+import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { RichTextEditor, Link } from '@mantine/tiptap';
-import { IconCheck, IconUpload } from '@tabler/icons-react';
+import { IconCheck, IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useMemo, useState } from 'react';
@@ -50,6 +50,14 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
       publishedAt: article?.publishedAt ? new Date(article.publishedAt) : new Date(),
       categories: article?.categories.map((category) => String(category.id)) ?? [],
       tags: article?.tags.map((tag) => String(tag.id)) ?? [],
+      thumbnail: undefined,
+    },
+    validate: {
+      title: (value) => (!value ? 'Title is required' : null),
+      content: (value) => (!value ? 'Content is required' : null),
+      categories: (value) => (value.length === 0 ? 'At least one category is required' : null),
+      tags: (value) => (value.length === 0 ? 'At least one tag is required' : null),
+      thumbnail: (value) => (!value ? 'Thumbnail is required' : null),
     },
   });
 
@@ -69,10 +77,10 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
       formData.append('publishedAt', values.publishedAt.toISOString());
     }
     values.categories.forEach((category) => {
-      formData.append('categories', category);
+      formData.append('categoryIds', category);
     });
     values.tags.forEach((tag) => {
-      formData.append('tags', tag);
+      formData.append('tagIds', tag);
     });
     if (values.thumbnail) {
       console.log(values);
@@ -121,6 +129,46 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
     }
   });
 
+  const handleOpenUploadModal = () => {
+    modals.open({
+      title: 'Upload Thumbnail',
+      size: 'lg',
+      children: (
+        <div className="p-4">
+          <Dropzone
+            onDrop={(files: FileWithPath[]) => {
+              const file = files[0];
+              form.setFieldValue('thumbnail', file);
+              setPreview(URL.createObjectURL(file));
+              modals.closeAll();
+            }}
+            maxFiles={1}
+            accept={['image/png', 'image/jpeg', 'image/jpg']}
+            classNames={{
+              root: 'data-[accept]:bg-blue-100 data-[accept]:border-blue-500 data-[accept]:text-blue-500 data-[reject]:bg-red-100 data-[reject]:border-red-500 data-[reject]:text-red-500 border-2 border-dashed border-gray-300 rounded-lg transition-all duration-200 hover:bg-gray-50',
+            }}
+          >
+            <div className="flex py-24 px-5 items-center justify-center gap-2 pointer-events-none">
+              <Dropzone.Accept>
+                <IconUpload size={52} className="text-blue-500" />
+              </Dropzone.Accept>
+              <Dropzone.Reject>
+                <IconX size={52} className="text-red-500" />
+              </Dropzone.Reject>
+              <Dropzone.Idle>
+                <IconPhoto size={52} className="text-gray-400 group-hover:text-blue-500" />
+              </Dropzone.Idle>
+              <div className="text-base text-left ">
+                <p>Drag image here or click to select</p>
+                <p className="text-xs text-gray-500">Only PNG, JPG files are accepted</p>
+              </div>
+            </div>
+          </Dropzone>
+        </div>
+      ),
+    });
+  };
+
   return (
     <Card shadow="sm" component="form" onSubmit={handleSubmit}>
       <Card.Section withBorder>
@@ -138,7 +186,7 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
             label="Title"
             description="Title Of the Article"
             placeholder="Insert Article Title"
-            className="col-span-12 lg:col-span-6"
+            className="col-span-12 "
             required
           />
 
@@ -195,54 +243,32 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
             data={tagOptions}
             required
           />
-          <div className="col-span-12 lg:col-span-12">
+          <div className="col-span-12 lg:col-span-6">
             <div className="mb-2">
               <span className="text-sm font-medium">Thumbnail</span>
+              <span className="text-red-500 ml-1">*</span>
             </div>
-            <Dropzone
-              onDrop={(files: FileWithPath[]) => {
-                const file = files[0];
-                form.setFieldValue('thumbnail', file);
-                setPreview(URL.createObjectURL(file));
-              }}
-              maxFiles={1}
-              accept={['image/png', 'image/jpeg', 'image/jpg']}
-              className="mb-2 border py-8 rounded-md border-dashed border-gray-200 transition-colors duration-200 hover:bg-gray-50"
-              styles={{
-                root: {
-                  '&[data-accept]': {
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    borderColor: 'rgb(59, 130, 246)',
-                  },
-                },
-              }}
-            >
-              <div className="flex flex-col items-center justify-center gap-2 pointer-events-none">
-                <Dropzone.Accept>
-                  <IconUpload size={32} className="text-blue-500" />
-                </Dropzone.Accept>
-                <Dropzone.Reject>
-                  <IconUpload size={32} className="text-red-500" />
-                </Dropzone.Reject>
-                <Dropzone.Idle>
-                  <IconUpload size={32} className="text-gray-400 group-hover:text-blue-500" />
-                </Dropzone.Idle>
-                <div className="text-sm text-center">
-                  <p>Drag image here or click to select</p>
-                  <p className="text-xs text-gray-500">Only PNG, JPG files are accepted</p>
+            <div className="flex flex-col gap-4">
+              <button
+                className={`w-full flex items-center justify-start px-2 py-2 rounded-md bg-transparent border ${
+                  form.errors.thumbnail ? 'border-red-500' : 'border-gray-300'
+                } gap-2 active:border-blue-500 active:translate-y-0.5`}
+                onClick={handleOpenUploadModal}
+                type="button"
+              >
+                <span className={`text-sm font-medium ${preview ? 'text-black' : 'text-gray-500'}`}>
+                  {preview ? form.values.thumbnail?.name : 'Upload Thumbnail'}
+                </span>
+              </button>
+              {form.errors.thumbnail && (
+                <span className="text-xs text-red-500">{form.errors.thumbnail}</span>
+              )}
+              {preview && (
+                <div className="relative w-56 rounded-md overflow-hidden">
+                  <Image src={preview} alt="Thumbnail preview" className="object-contain" />
                 </div>
-              </div>
-            </Dropzone>
-            {preview && (
-              <div className="relative  w-56  rounded-md overflow-hidden">
-                <Image
-                  src={preview}
-                  alt="Thumbnail preview"
-                  className="object-contain"
-                  // height={192}
-                />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </Card.Section>

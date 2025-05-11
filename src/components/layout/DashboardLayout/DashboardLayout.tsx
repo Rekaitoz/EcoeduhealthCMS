@@ -22,8 +22,15 @@ const navigations: SidebarNavigation = [
       { title: 'Dashboard', href: '/', icon: IconLayout },
       { title: 'Quiz', href: '/quiz', icon: IconClipboard },
       { title: 'Article', href: '/article', icon: IconArticle },
-      { title: 'Kategori', href: '/category', icon: IconQuote },
-      { title: 'Tag', href: '/tag', icon: IconTag },
+      {
+        title: 'Data Master Article',
+        icon: IconQuote,
+        routes: [
+          { title: 'Kategori', href: '/category', icon: IconQuote },
+          { title: 'Tag', href: '/tag', icon: IconTag },
+        ],
+      },
+
       { title: 'User', href: '/user', icon: IconUsers },
     ],
   },

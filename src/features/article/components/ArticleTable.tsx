@@ -90,13 +90,13 @@ export const ArticleTable: React.FC<Props> = ({ category, tag }) => {
           <td className="capitalize min-w-max">
             <div className="flex items-center mr-6">
               <a
-                href={article.thumbnail?.path}
+                href={`${import.meta.env.VITE_URL_IMAGE}/uploads/${article.thumbnail?.path}`}
                 target="_blank"
                 className="block flex-shrink-0 aspect-video w-24 bg-slate-200 rounded-md relative overflow-hidden"
                 rel="noreferrer"
               >
                 <img
-                  src={article.thumbnail?.path}
+                  src={`${import.meta.env.VITE_URL_IMAGE}/uploads/${article.thumbnail?.path}`}
                   alt={article.title}
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
@@ -119,7 +119,7 @@ export const ArticleTable: React.FC<Props> = ({ category, tag }) => {
                 color="yellow"
                 radius="lg"
                 component={Link}
-                to={`/article/update/${article.id}`}
+                to={`/article/update/${article.slug}`}
               >
                 <IconEdit size={18} />
               </ActionIcon>

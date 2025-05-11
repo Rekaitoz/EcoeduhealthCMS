@@ -46,7 +46,7 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
     return () => {
       modals.openConfirmModal({
         modalId: 'questions-delete',
-        title: 'Hapus Produk',
+        title: 'Hapus Pertanyaan',
         children: <Text size="sm">Apakah anda yakin untuk menghapus Pertanyaan ini?</Text>,
         centered: true,
         closeOnConfirm: false,
@@ -60,14 +60,14 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
                   color: 'green',
                   icon: <IconCheck />,
                 });
-                modals.close('product-delete');
+                modals.close('questions-delete');
               },
               onError: () => {
                 notifications.show({
                   message: 'Pertanyaan tidak bisa dihapus',
                   color: 'red',
                 });
-                modals.close('product-delete');
+                modals.close('questions-delete');
               },
             }
           );

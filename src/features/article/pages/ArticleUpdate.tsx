@@ -8,9 +8,9 @@ import { useArticle } from '../api';
 import { ArticleForm } from '../components';
 
 export const ArticleUpdate: React.FC = () => {
-  const { id } = useParams<'id'>();
-  const { data, isLoading, isError } = useArticle({ id: id as string });
-
+  const { slug } = useParams();
+  console.log(slug);
+  const { data, isLoading, isError } = useArticle({ slug: slug as string });
   const navigate = useNavigate();
 
   if (isLoading)
