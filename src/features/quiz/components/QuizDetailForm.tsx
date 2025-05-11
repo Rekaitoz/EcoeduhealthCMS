@@ -143,9 +143,8 @@ export const QuizDetailForm: React.FC<Props> = ({ quiz, onCancel }) => {
                       </h4>
                       <span className="font-semibold">{quiz?.questions?.[index].text}</span>
                     </div>
-                    {quiz?.questions?.[index].answers &&
-                    quiz?.questions?.[index].answers.length > 0 ? (
-                      quiz?.questions?.[index]?.answers?.map((item2, index2) => (
+                    {item.answers && item.answers.length > 0 ? (
+                      item.answers.map((item2, index2) => (
                         <div
                           key={`answer_${index2}`}
                           className="flex w-full items-center space-x-4 mb-1 last:mb-0"

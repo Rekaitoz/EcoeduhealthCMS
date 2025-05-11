@@ -5,10 +5,10 @@ import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
 
 import { useUpdateTag } from '../api';
-import { Tag, TagDTO } from '../types';
+import { TagType, TagDTO } from '../types';
 
 type Props = {
-  tag: Tag;
+  tag: TagType;
   onSuccess?: VoidFunction;
 };
 

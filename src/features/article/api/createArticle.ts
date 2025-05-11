@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Article, ArticleDTO } from '../types';
+import { Article } from '../types';
 
 // import { Article, ArticleDTO } from '../../types';
 
