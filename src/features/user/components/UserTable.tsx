@@ -106,7 +106,7 @@ export const UserTable: React.FC<Props> = ({ title = 'Users', role, company, onA
               <td className="capitalize">{user.role}</td>
               <td>{dayjs(user.createdAt).format('D MMMM YYYY')}</td>
               <td>
-                <Authorization role={['user']}>
+                <Authorization role={['admin']}>
                   <div className="flex items-center space-x-2">
                     <ActionIcon
                       title="Remove user"

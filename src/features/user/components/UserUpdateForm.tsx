@@ -1,4 +1,5 @@
 import { Button, PasswordInput, Select, TextInput } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
@@ -21,6 +22,7 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
       password: '',
       role: user.role,
       statusTemp: user.status ? 'active' : 'inactive',
+      birthDate: new Date(user.birthDate),
     },
   });
 
@@ -51,6 +53,12 @@ export const UserUpdateForm: React.FC<Props> = ({ user, role, onSuccess }) => {
     <form className="relative" onSubmit={handleSubmit}>
       <div className="space-y-2">
         <TextInput label="Nama" required {...form.getInputProps('name')} />
+        <DateInput
+          label="Tanggal Lahir"
+          required
+          {...form.getInputProps('birthDate')}
+          valueFormat="YYYY-MM-DD"
+        />
         <TextInput label="Username" required {...form.getInputProps('username')} />
         <PasswordInput
           label="Password"

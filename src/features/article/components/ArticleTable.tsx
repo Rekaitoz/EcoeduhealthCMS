@@ -75,7 +75,6 @@ export const ArticleTable: React.FC<Props> = ({ category, tag }) => {
       });
     };
   }
-  console.log(data);
 
   return (
     <Table
@@ -119,7 +118,7 @@ export const ArticleTable: React.FC<Props> = ({ category, tag }) => {
                 color="yellow"
                 radius="lg"
                 component={Link}
-                to={`/article/update/${article.slug}`}
+                to={`/article/update/${article.id}`}
               >
                 <IconEdit size={18} />
               </ActionIcon>

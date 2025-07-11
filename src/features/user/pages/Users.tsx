@@ -17,7 +17,7 @@ export const Users: React.FC = () => {
     <main>
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-800">User</h1>
-        <Authorization role={['user']}>
+        <Authorization role={['admin']}>
           <Button onClick={handleAdd}>Tambah</Button>
         </Authorization>
       </div>

@@ -6,6 +6,7 @@ export type User = {
   username: string;
   role: Role;
   status: 'active' | 'inactive';
+  birthDate: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -17,6 +18,7 @@ export type UserRequest = {
   role: Role;
   status?: true | false;
   statusTemp: 'active' | 'inactive';
+  birthDate: Date | null;
 };
 
 export type UserQuery = {

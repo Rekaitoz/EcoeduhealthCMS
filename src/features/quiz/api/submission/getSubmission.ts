@@ -10,9 +10,8 @@ type SubmissionRequest = {
 };
 
 export async function getSubmission({ params }: SubmissionRequest) {
-  const res = await axios.get<SubmissionGetAll>(`/submission`, { params });
-
-  return res.data;
+  const res = await axios.get<{ data: SubmissionGetAll }>(`/submissions`, { params });
+  return res.data.data;
 }
 
 type QueryFnType = typeof getSubmission;

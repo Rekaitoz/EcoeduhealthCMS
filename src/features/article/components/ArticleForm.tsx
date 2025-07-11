@@ -41,7 +41,11 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
 
   const createMutation = useCreateArticle();
   const updateMutation = useUpdateArticle();
-  const [preview, setPreview] = useState<string | null>(article?.thumbnail?.path || null);
+  const [preview, setPreview] = useState<string | null>(
+    article?.thumbnail?.path
+      ? `${import.meta.env.VITE_URL_IMAGE}/uploads/${article.thumbnail.path}`
+      : null
+  );
 
   const form = useForm<ArticleDTO>({
     initialValues: {
@@ -57,7 +61,10 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
       content: (value) => (!value ? 'Content is required' : null),
       categories: (value) => (value.length === 0 ? 'At least one category is required' : null),
       tags: (value) => (value.length === 0 ? 'At least one tag is required' : null),
-      thumbnail: (value) => (!value ? 'Thumbnail is required' : null),
+      thumbnail: (value) => {
+        if (!article && !value) return 'Thumbnail is required';
+        return null;
+      },
     },
   });
 
@@ -82,9 +89,7 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
     values.tags.forEach((tag) => {
       formData.append('tagIds', tag);
     });
-    if (values.thumbnail) {
-      console.log(values);
-
+    if (values.thumbnail instanceof File) {
       formData.append('thumbnail', values.thumbnail);
     }
 
@@ -257,7 +262,11 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
                 type="button"
               >
                 <span className={`text-sm font-medium ${preview ? 'text-black' : 'text-gray-500'}`}>
-                  {preview ? form.values.thumbnail?.name : 'Upload Thumbnail'}
+                  {preview
+                    ? form.values.thumbnail?.name
+                      ? form.values.thumbnail?.name
+                      : article?.thumbnail?.name
+                    : 'Upload Thumbnail'}
                 </span>
               </button>
               {form.errors.thumbnail && (

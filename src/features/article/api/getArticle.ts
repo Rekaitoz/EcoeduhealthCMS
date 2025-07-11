@@ -6,11 +6,11 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 // import { Article } from '../../types';
 
 type ArticleRearticle = {
-  slug: string;
+  id: number;
 };
 
-export async function getArticle({ slug }: ArticleRearticle) {
-  const res = await axios.get<any>(`/articles/${slug}`);
+export async function getArticle({ id }: ArticleRearticle) {
+  const res = await axios.get<any>(`/articles/${id}`);
 
   return res.data;
 }
@@ -18,14 +18,14 @@ export async function getArticle({ slug }: ArticleRearticle) {
 type QueryFnType = typeof getArticle;
 
 type UseArticleOptions = {
-  slug: string;
+  id: number;
   config?: QueryConfig<QueryFnType>;
 };
 
-export function useArticle({ config, slug }: UseArticleOptions) {
+export function useArticle({ config, id }: UseArticleOptions) {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: ['article', slug],
-    queryFn: () => getArticle({ slug }),
+    queryKey: ['article', id],
+    queryFn: () => getArticle({ id }),
   });
 }

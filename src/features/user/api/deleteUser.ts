@@ -11,7 +11,7 @@ type UserDeleteDTO = {
 };
 
 export async function deleteUser({ id }: UserDeleteDTO) {
-  const res = await axios.delete<GeneralResponse<User>>(`/user/${id}`);
+  const res = await axios.delete<GeneralResponse<User>>(`/users/${id}`);
 
   return res.data;
 }

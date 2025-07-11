@@ -27,7 +27,7 @@ export const AppRoutes: React.FC = () => {
 
           <Route path="/article" element={<Article />} />
           <Route path="/article/create" element={<ArticleCreate />} />
-          <Route path="/article/update/:slug" element={<ArticleUpdate />} />
+          <Route path="/article/update/:id" element={<ArticleUpdate />} />
 
           <Route path="/category" element={<Category />} />
 

@@ -11,7 +11,7 @@ type UserCreateDTO = {
 };
 
 export async function createUser({ data }: UserCreateDTO) {
-  const res = await axios.post<GeneralResponse<User>>('/user', data);
+  const res = await axios.post<GeneralResponse<User>>('/users', data);
 
   return res.data;
 }

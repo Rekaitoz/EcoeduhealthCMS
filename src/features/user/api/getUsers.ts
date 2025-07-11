@@ -11,9 +11,9 @@ type UsersDTO = {
 };
 
 export async function getUsers({ params }: UsersDTO) {
-  const res = await axios.get<PaginatedResult<User>>('/user', { params });
+  const res = await axios.get<{ data: PaginatedResult<User> }>('/users', { params });
 
-  return res.data;
+  return res.data.data;
 }
 
 type QueryFnType = typeof getUsers;

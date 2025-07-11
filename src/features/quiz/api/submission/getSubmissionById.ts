@@ -10,9 +10,9 @@ type SubmissionByIdRequest = {
 };
 
 export async function getSubmissionById({ id }: SubmissionByIdRequest) {
-  const res = await axios.get<Submission>(`/submission/${id}`);
+  const res = await axios.get<{ data: Submission }>(`/submissions/${id}`);
 
-  return res.data;
+  return res.data.data;
 }
 
 type QueryFnType = typeof getSubmissionById;

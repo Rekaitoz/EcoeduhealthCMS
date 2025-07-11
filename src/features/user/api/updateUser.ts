@@ -12,7 +12,7 @@ export type UpdateUserDTO = {
 };
 
 export async function updateUser({ id, data }: UpdateUserDTO) {
-  const res = await axios.put<GeneralResponse<User>>(`/user/${id}`, data);
+  const res = await axios.put<GeneralResponse<User>>(`/users/${id}`, data);
 
   return res.data;
 }
