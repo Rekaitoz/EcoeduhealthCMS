@@ -147,7 +147,24 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
               setPreview(URL.createObjectURL(file));
               modals.closeAll();
             }}
+            onReject={(files) => {
+              const file = files[0];
+              if (file.errors.some((error) => error.code === 'file-too-large')) {
+                notifications.show({
+                  message: 'File size must be less than 1MB',
+                  color: 'red',
+                  icon: <IconX />,
+                });
+              } else {
+                notifications.show({
+                  message: 'Invalid file type. Only PNG, JPG files are accepted',
+                  color: 'red',
+                  icon: <IconX />,
+                });
+              }
+            }}
             maxFiles={1}
+            maxSize={1024 * 1024} // 1MB limit
             accept={['image/png', 'image/jpeg', 'image/jpg']}
             classNames={{
               root: 'data-[accept]:bg-blue-100 data-[accept]:border-blue-500 data-[accept]:text-blue-500 data-[reject]:bg-red-100 data-[reject]:border-red-500 data-[reject]:text-red-500 border-2 border-dashed border-gray-300 rounded-lg transition-all duration-200 hover:bg-gray-50',
@@ -165,7 +182,7 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
               </Dropzone.Idle>
               <div className="text-base text-left ">
                 <p>Drag image here or click to select</p>
-                <p className="text-xs text-gray-500">Only PNG, JPG files are accepted</p>
+                <p className="text-xs text-gray-500">Only PNG, JPG files are accepted (max 1MB)</p>
               </div>
             </div>
           </Dropzone>

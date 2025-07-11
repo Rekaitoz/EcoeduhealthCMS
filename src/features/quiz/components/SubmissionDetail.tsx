@@ -49,7 +49,6 @@ export const SubmissionDetail: React.FC<Props> = ({ quiz }) => {
       setData(dataSubmission);
     }
   }, [quiz, dataSubmission]);
-  console.log(data);
   const filteredSubmissions = data?.result.filter((item) => item.quiz?.id === quiz?.id) || [];
 
   const groupedByUser = filteredSubmissions?.reduce<SubmissionFilter[]>((acc, item) => {
