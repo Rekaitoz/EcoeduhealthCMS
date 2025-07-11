@@ -30,7 +30,9 @@ function AccordionLabel(item: SubmissionFilter) {
 }
 
 export const SubmissionDetail: React.FC<Props> = ({ quiz }) => {
-  const { data: dataSubmission, isLoading } = useSubmission({ params: { limit: -1, page: 1 } });
+  const { data: dataSubmission, isLoading } = useSubmission({
+    params: { limit: 1000000, page: 1 },
+  });
 
   const [data, setData] = useState<SubmissionGetAll>();
 
@@ -47,7 +49,7 @@ export const SubmissionDetail: React.FC<Props> = ({ quiz }) => {
       setData(dataSubmission);
     }
   }, [quiz, dataSubmission]);
-
+  console.log(data);
   const filteredSubmissions = data?.result.filter((item) => item.quiz?.id === quiz?.id) || [];
 
   const groupedByUser = filteredSubmissions?.reduce<SubmissionFilter[]>((acc, item) => {
@@ -108,10 +110,12 @@ export const SubmissionDetail: React.FC<Props> = ({ quiz }) => {
                 <span className="font-semibold">{item2.question.text}</span>
               </div>
               <div className="flex w-full items-center space-x-4 mb-1 last:mb-0">
-                <div className="grid grid-cols-1 md:grid-cols-12  gap-3 flex-grow w-full">
+                <div className="grid grid-cols-1 gap-3 flex-grow w-full">
                   &#8226; {item2.answer.text}
                   <div className="flex items-center space-x-2 col-span-6">
-                    <span className="font-medium text-sm text-gray-800 ">
+                    <span
+                      className={`font-medium text-sm ${item2.answer.value > 0 ? 'text-green-800' : 'text-red-800'}`}
+                    >
                       Nilai Jawaban = {item2.answer.value} Poin
                     </span>
                   </div>
