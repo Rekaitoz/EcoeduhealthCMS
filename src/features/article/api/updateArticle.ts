@@ -14,7 +14,7 @@ export type ArticleUpdateRearticle = {
 };
 
 export async function updateArticle({ id, data }: ArticleUpdateRearticle) {
-  const res = await axios.put<GeneralResponse<Article>>(`/articles/${id}`, data, {
+  const res = await axios.post<GeneralResponse<Article>>(`/articles/${id}`, data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

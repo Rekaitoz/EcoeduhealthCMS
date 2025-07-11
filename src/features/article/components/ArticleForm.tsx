@@ -46,7 +46,6 @@ export const ArticleForm: React.FC<Props> = ({ article, onCancel, onSuccess }) =
       ? `${import.meta.env.VITE_URL_IMAGE}/uploads/${article.thumbnail.path}`
       : null
   );
-
   const form = useForm<ArticleDTO>({
     initialValues: {
       title: article?.title || '',
